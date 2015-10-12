@@ -56,12 +56,10 @@ def save_data(data, output_filename):
     Check out the os module for determining whether a file exists already.
     """
 
-    # Getting absolute path of file
-    abs_filename = os.path.abspath(output_filename)
-    if is_file(abs_filename):
+    if is_file(output_filename):
         return 1
     else:
-        f = open(abs_filename, 'w')
+        f = open("../data/" + output_filename, 'w')
         f.write(data)
         return 0
 
@@ -72,15 +70,16 @@ def is_file(filename):
     Parameters
     ----------
     filename : str
-        Absolute path to the file
+        Relative path to the file
 
     Returns
     -------  
     out : bool
         Return true if file already exists, false otherwise
     """
-    
-    return os.path.isfile(filename)
+    # Getting absolute path of file
+    rel_path = "../data/" + filename
+    return os.path.isfile(rel_path)
 
 
 def verify_data(data, known_checksum):
