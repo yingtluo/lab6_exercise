@@ -2,6 +2,7 @@
 This module contains functions for downloading and verifying data from
 the internet.
 """
+import os
 
 def download_data(url):
     """
@@ -34,10 +35,10 @@ def save_data(data, output_filename):
     Parameters
     ----------
     data : str
-         String containing the data you wish to write out to a file
+        String containing the data you wish to write out to a file
 
     output_filename : str
-         Path (full or relative) to the file you will save the data into.
+        Path (full or relative) to the file you will save the data into.
 
     Returns
     -------
@@ -49,7 +50,33 @@ def save_data(data, output_filename):
     ----
     Check out the os module for determining whether a file exists already.
     """
-    return NotImplemented
+
+    # Getting absolute path of file
+    abs_filename = os.path.abspath(output_filename)
+    if is_file(abs_filename):
+        return 1
+    else:
+        f = open(abs_filename, 'w')
+        f.write(data)
+        return 0
+
+def is_file(filename):
+    """
+    Helper function that returns whether the file already exists.
+
+    Parameters
+    ----------
+    filename : str
+        Absolute path to the file
+
+    Returns
+    -------  
+    out : bool
+        Return true if file already exists, false otherwise
+    """
+    
+    return os.path.isfile(filename)
+
 
 def verify_data(data, known_checksum):
     """
